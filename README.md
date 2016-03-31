@@ -1,5 +1,6 @@
 # ITIS A. Meucci
 ## Introduzione a Laravel
+### Indirizzo server: 172.16.102.3
 Day 1
 ------------
 1. INTRODUZIONE A LARAVEL
@@ -15,7 +16,7 @@ composer create-project --prefer-dist laravel/laravel prova
 ```
 * Avviare il server locale
 ```bash
-php artisan 
+php artisan serve
 ```
 * Avviare il server locale sulla porta 3000 consentendo connessioni remote 
 ```bash
@@ -50,7 +51,7 @@ return view('pages.about'); //per chiamare la vista in resources/views/pages/abo
 ```php
 // app/Http/routes.php
 Route::get('/', function(){
-$people = ['pippo', 'ciccio', 'nino'];
+  $people = ['pippo', 'ciccio', 'nino'];
   return view('welcome', ['people' => $people]);
 });
 return view('welcome', compact('people'));
