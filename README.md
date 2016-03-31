@@ -52,11 +52,12 @@ return view('pages.about'); //per chiamare la vista in resources/views/pages/abo
 // app/Http/routes.php
 Route::get('/', function(){
   $people = ['pippo', 'ciccio', 'nino'];
-  return view('welcome', ['people' => $people]);
+  // return view('welcome', ['people' => $people]);
+  return view('welcome', compact('people'));
+  // return view('welcome')->with('people', $people);
+  // return view('welcome')->withPeople($people);  
 });
-return view('welcome', compact('people'));
-return view('welcome')->with('people', $people);
-return view('welcome')->withPeople($people);
+
 ```
 * Mostrare i dati nella vista
 ```php
