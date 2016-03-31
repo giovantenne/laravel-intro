@@ -23,8 +23,10 @@ php artisan serve
 ```bash
 php artisan serve --host 0.0.0.0 --port 3000
 ```
+* Visualizzare il funzionamento dell'installazione aprendo il browser sull'indirizzo del server. (es: http://172.16.102.3:3000)
+
 ------------
-* Aprire app/Http/routes.php
+* Editare il file app/Http/routes.php
 * Ritornare una semplice stringa
 ```php
 // app/Http/routes.php
@@ -35,14 +37,16 @@ Route::get('/', function () {
 * Aggiungere una route per la vista 'about' e creare il file about.blade.php
 ```php
 // app/Http/routes.php
-return view('about'); 
+Route::get('about', function () { 
+  return view('about'); 
+});
 ```
 ```php
 //resources/views/about.blade.php
 <h1>About page</h1>
 ```
 
-* Creare sottocartella 'pages'
+* Spostare la vista nella sottocartella 'pages' e aggiornare il file route.php
 ```php
 // app/Http/routes.php
 return view('pages.about'); //per chiamare la vista in resources/views/pages/about.blade.php
@@ -60,6 +64,8 @@ Route::get('/', function(){
 });
 
 ```
+in questo modo viene passata alla vista una variabile "people" contentente il contenuto della variabile locale $people, ovvero un array
+
 * Mostrare i dati nella vista
 ```php
 // resources/views/welcome.blade.php
@@ -80,19 +86,20 @@ Route::get('/', function(){
 ```
 ------------
 
-* Utilizzare i controller dal file route.php
+* Modificare il file route.php per utilizzare un controller
 ```php
 // app/Http/routes.php
 Route::get('/', 'PagesController@home');
 ```
-* Visualizzare l'errore di controller mancante
-* Visualizzare i controller dentro app/Http/Controllers
+* Aggiornare il browser e visualizzare l'errore di controller mancante
+* Visualizzare i controller esistenti dentro app/Http/Controllers
 
-* Utilizzare il comando "php artisan" per visualizzare l'help generale
+* Utilizzare il comando "php artisan" per visualizzare l'help generale e per generare un controller
 ```bash
 php artisan help make:controller
 php artisan make:controller PagesController
 ```
+
 * Nel controller appena creato definire il metodo 'home' con la logica che stava nelle route
 ```php
 // app/Http/Controllers/PagesController.php
@@ -102,7 +109,7 @@ public function home()
   return view('welcome', ['people' => $people]);
 }
 ```
-* Aggiungere anche la route about con il relativo metodo nel controller ritornando una stringa o una vista
+* Aggiungere anche la route 'about' con il relativo metodo nel controller ritornando una stringa o una vista
 
 ------------
 
