@@ -8,6 +8,7 @@ Day 1
 3. DEFINIZIONE DELLE ROTTE
 4. PASSARE DATI ALLE VISTE
 5. DELEGARE AI CONTROLLER
+6. FILE DI LAYOUT
 
 ------------
 * Creare un nuovo progetto
@@ -103,14 +104,6 @@ public function home()
 ```
 * Aggiungere anche la route about con il relativo metodo nel controller ritornando una stringa o una vista
 
-Day 2
-------------
-1. FILE DI LAYOUT
-2. INTRODUZIONE A ROTTE REST
-3. MIGRAZIONI
-4. ACCESSO AI DATI SENZA ELOQUENT
-5. MODELLI CON L'ORM ELOQUENT
-
 ------------
 
 * Creare un layout file in resources/views/layout.blade.php ed aggiungere lo yield
@@ -134,6 +127,16 @@ Day 2
 ```
 * Fare la stessa cosa con la vista About
 * Aggiungere la sezione header e footer
+
+
+Day 2
+------------
+1. INTRODUZIONE A ROTTE REST
+2. MIGRAZIONI
+3. ACCESSO AI DATI SENZA ELOQUENT
+4. MODELLI CON L'ORM ELOQUENT
+
+
 
 ------------
 
@@ -334,4 +337,4 @@ public function show(Card $card)
     // return view('cards.show', compact('card'));
 }
 ```
-per funzionare bisogna che il paramtero nelle rotte si chiami si chiami con lo stesso nome del parametro passato all'azione del controller
+per far funzionare la "magia" il paramtero nelle rotte si deve chiamar con lo stesso nome del parametro passato all'azione del controller
