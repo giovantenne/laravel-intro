@@ -7,8 +7,9 @@
 * [Day 2](#day2)
 * [Day 3](#day3)
 
+<a name="day1"></a>
+
 ------------
-<a name="day2"></a>
 Day 1
 ------------
 1. INTRODUZIONE A LARAVEL
@@ -143,10 +144,10 @@ public function home()
 * Fare la stessa cosa con la vista About
 * Aggiungere la sezione header e footer
 
+<a name="day2"></a>
 
 Day 2
 ------------
-<a name="day1"></a>
 
 1. INTRODUZIONE A ROTTE REST
 2. MIGRAZIONI
@@ -354,9 +355,10 @@ public function show(Card $card)
 ```
 per far funzionare la "magia" il paramtero nelle rotte si deve chiamar con lo stesso nome del parametro passato all'azione del controller
 
+<a name="day3"></a>
+
 Day 3
 ------------
-<a name="day3"></a>
 
 1. DEFINIRE RELAZIONI CON ELOQUENT
 
