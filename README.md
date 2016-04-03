@@ -1,6 +1,14 @@
 # ITIS A. Meucci
 ## Introduzione a Laravel
 ### Indirizzo server: 172.16.102.3
+
+------------
+* [Day 1](#day1)
+* [Day 2](#day2)
+* [Day 3](#day3)
+
+------------
+<a name="day2"></a>
 Day 1
 ------------
 1. INTRODUZIONE A LARAVEL
@@ -138,12 +146,12 @@ public function home()
 
 Day 2
 ------------
+<a name="day1"></a>
+
 1. INTRODUZIONE A ROTTE REST
 2. MIGRAZIONI
 3. ACCESSO AI DATI SENZA ELOQUENT
 4. MODELLI CON L'ORM ELOQUENT
-
-
 
 ------------
 
@@ -203,7 +211,7 @@ php artisan migrate
 php artisan tinker
 ```
 * Impartire qualche comando:
-```
+```php
 2+2
 echo 'foobar'
 ```
@@ -299,11 +307,11 @@ public function show($card)
 php artisan tinker 
 ```
 
-```bash
+```php
 DB::table('cards')->get();
 ```
 oppure 
-```bash
+```php
 App\Card::all()
 ```
 
@@ -345,3 +353,173 @@ public function show(Card $card)
 }
 ```
 per far funzionare la "magia" il paramtero nelle rotte si deve chiamar con lo stesso nome del parametro passato all'azione del controller
+
+Day 3
+------------
+<a name="day3"></a>
+
+1. DEFINIRE RELAZIONI CON ELOQUENT
+
+------------
+
+* Creare una nuova migrazione per la tabella "notes"
+```bash
+php artisan make:migration create_notes_table --create=notes
+```
+* nella migrazione aggiungere
+```php
+// database/migrations/xxxx_xx_xx_xxxxxx_create_notes_table.php
+$table->integer('card_id')->unsigned()->index();
+$table->text('body');
+```
+* migrare il database
+```bash
+php artisan migrate
+```
+* creare il modello Note
+```bash
+php artisan make:model Note
+```
+è anche possibile creare modello e migrazione con un solo comando
+```bash
+php artisan make:model Note -m
+```
+
+* aprire il tinker
+```bash
+php artisan tinker
+```
+* impartire i seguenti comandi
+```php
+$card = App\Card::first();    // per ottenere l'instanza della prima Card
+$note = new App/Note;         // per creare un instanza di una nuova nota
+$note->body = 'Some note for the card.'; 
+$note->card_id = 2;           // per associare la nota alla Card con id 2
+$note->save();                // per salvare la nota
+App\Note::all();
+```
+
+
+* Per utilizzare una relazione Eloquent ad avere le note della Card modificare il modello Card.php
+```php
+// app/Card.php
+public function notes()
+{
+  return $this->hasMany(Note::class);
+  // return $this->hasMany('App\Note');
+}
+```
+* riaprire il tinker ed estarre una collection delle notes di una Card
+```bash
+php artisan tinker
+```
+```php
+$card = App\Card::first();
+$card->notes;
+```
+
+* ottenere la prima delle Note
+```bash
+$card->notes[0];
+```
+oppure
+```bash
+$card->notes->first();
+```
+l'ultimo comando è diverso da 
+```bash
+$card->notes()->first();
+```
+
+per verificare la differenza è possibile visualizzare l'SQL generato, nel tinker dare questo comando:
+```php
+DB::listen(function($query) { var_dump($query->sql); });
+```
+e visualizzare le differenze:
+```bash
+$card = App\Card::first();
+$card->notes;
+$card->notes;                     // la seconda volta la query non viene eseguita perchè laravel usa un sistema di cache
+$card = $card->fresh();           // per invalidare la cache
+$card->fresh()->notes->first();   // la query estrare tutti i record, anche se fossero migliaia e mostra il primo
+$card->fresh()->notes()->first(); // la query viene modificata e viene estratto solo un record
+```
+
+* invertire la relazione nel modello note.php 
+```php
+// app/Note.php
+public function card()
+{
+  return $this->belongsTo(Class::class);
+}
+```
+
+* aprire il tinker e creare una nuova nota associata alla Card
+```bash
+php artisan tinker 
+```
+```php
+$note = new App\Note;
+$note->body = 'Here is another note.';
+$card = App\Card::first();
+$card->notes()->save($note);
+$card->notes;
+```
+
+* a questo punto modificare la show della Card aggiungendo
+```php
+// resources/views/cards/show.blade.php
+<ul>
+  @foreach ($card->notes as $note)
+    <li>{{ $note->body }}</li>
+  @endforeach
+</ul>
+```
+
+* visualizzare il risultato sul browser
+
+* riaprire il tinker 
+```bash
+php artisan tinker
+```
+
+* creare una nuova nota direttamente passando i valori come parametri
+```php
+$card = App\Card::first();
+$card->notes()->create(['body' => 'Yet another note about this card']);
+```
+* per ragioni di sicurezza visualizzare l'errore di MassAssignment
+
+* per risolvere il problema modificare il modello Note creando una whitelist dei parametri accettati
+```php
+// app/Note.php
+protected $fillable = ['body'];
+```
+
+* riavviare il tinker e riprovare
+
+* modificare il file resource/view/cards/index.blade.php aggiungendo il link alla pagina di dettaglio
+```php
+// resource/view/cards/index.blade.php
+<a href="/cards/{{ $card->id }}">{{ $card->title }}</a>
+```
+* aggiornare il browser per verificarne il funzionamento
+
+* delegare al modello la generazione dal path corretto modificando nuovamente la vista index
+```php
+// resource/view/cards/index.blade.php
+<a href="{{ $card->path }}">{{ $card->title }}</a>
+```
+
+e il modello Card
+```php
+// app/Card.php
+public function path(){
+  return '/cards/' . $this.id;
+}
+```
+
+
+
+
+
