@@ -394,7 +394,7 @@ php artisan tinker
 * impartire i seguenti comandi
 ```php
 $card = App\Card::first();    // per ottenere l'instanza della prima Card
-$note = new App/Note;         // per creare un instanza di una nuova nota
+$note = new App\Note;         // per creare un instanza di una nuova nota
 $note->body = 'Some note for the card.'; 
 $note->card_id = 2;           // per associare la nota alla Card con id 2
 $note->save();                // per salvare la nota
