@@ -490,7 +490,7 @@ php artisan tinker
 $card = App\Card::first();
 $card->notes()->create(['body' => 'Yet another note about this card']);
 ```
-* per ragioni di sicurezza visualizzare l'errore di MassAssignment
+* viene generato un'errore di MassAssignment per ragioni di sicurezza
 
 * per risolvere il problema modificare il modello Note creando una whitelist dei parametri accettati
 ```php
