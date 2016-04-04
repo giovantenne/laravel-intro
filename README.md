@@ -228,18 +228,16 @@ DB::table('cards')->insert(['title' => 'My Second New Card', 'created_at' => new
 
 ------------
 
-* In CardsController.php nel metodo index() inserire
+* In CardsController.php creare il metodo index
 ```php
 // app/Http/Controllers/CardsController.php
-$cards = \DB::table('cards')->get();
-return view('cards.index', ['cards' => $cards]);
+public function index()
+{
+  $cards = \DB::table('cards')->get();
+  return view('cards.index', compact('cards'));
+}
 ```
-oppure l'equivalente più compatto
-```php
-// app/Http/Controllers/CardsController.php
-$cards = \DB::table('cards')->get();
-return view('cards.index', compact('cards'));
-```
+
 * Per rimuovere lo slash da \DB  inserire il modulo DB con la seguente direttiva
 ```php
 // app/Http/Controllers/CardsController.php
