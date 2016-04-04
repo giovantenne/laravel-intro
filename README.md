@@ -452,7 +452,7 @@ $card->fresh()->notes()->first(); // la query viene modificata e viene estratto 
 // app/Note.php
 public function card()
 {
-  return $this->belongsTo(Class::class);
+  return $this->belongsTo(Card::class);
 }
 ```
 
