@@ -321,7 +321,7 @@ App\Card::all()
 public function show($id)
 {
   $card = Card::find($id);
-  return $card:
+  return $card;
 }
 ```
 
